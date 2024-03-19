@@ -1,4 +1,4 @@
-package com.example.demoapp.common.comfig;
+package com.example.demoapp.common.config;
 
 import javax.sql.DataSource;
 import org.jooq.SQLDialect;

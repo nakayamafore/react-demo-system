@@ -1,4 +1,4 @@
-package com.example.demoapp.controller.model;
+package com.example.demoapp.form;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -6,23 +6,14 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
- * 企業更新リクエスト
+ * 企業情報取得リクエスト
  */
 @Data
-public class CompanyUpdateRequest {
+public class CompanyFindRequest {
   // 企業コード
   @Size(min = 10, max = 10)
   @Pattern(regexp = "^[a-zA-Z0-9]*$")
   @NotBlank
   private String companyCode;
 
-  // 企業名
-  @Size(max = 50)
-  @NotBlank
-  private String bizName;
-
-  // 企業所在地
-  @Size(max = 50)
-  @NotBlank
-  private String bizPlace;
 }

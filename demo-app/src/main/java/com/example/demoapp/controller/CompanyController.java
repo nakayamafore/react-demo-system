@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.demoapp.controller.model.CompanyDeleteRequest;
-import com.example.demoapp.controller.model.CompanyFindAllResponce;
-import com.example.demoapp.controller.model.CompanyFindResponce;
-import com.example.demoapp.controller.model.CompanyRegisterRequest;
-import com.example.demoapp.controller.model.CompanyUpdateRequest;
+import com.example.demoapp.form.CompanyDeleteRequest;
+import com.example.demoapp.form.CompanyFindAllResponce;
+import com.example.demoapp.form.CompanyFindResponce;
+import com.example.demoapp.form.CompanyRegisterRequest;
+import com.example.demoapp.form.CompanyUpdateRequest;
 import com.example.demoapp.model.CompanyData;
 import com.example.demoapp.service.CompanyService;
 import com.example.demoapp.tables.pojos.CompanyEntity;
@@ -40,14 +40,14 @@ public class CompanyController {
    */
   @PostMapping
   public void register(@Validated @RequestBody CompanyRegisterRequest request) {
-    final var data = mapper.map(request, CompanyData.class);
-    companyService.register(data);
+    final var companyData = mapper.map(request, CompanyData.class);
+    companyService.register(companyData);
   }
 
   /**
    * 企業情報全取得
    * 
-   * @param request 企業情報取得リクエスト
+   * @return 企業情報全取得レスポンス
    */
   @GetMapping
   public CompanyFindAllResponce findByAll() {
@@ -58,7 +58,8 @@ public class CompanyController {
   /**
    * 企業情報取得
    * 
-   * @param request 企業情報取得リクエスト
+   * @param companyCode 企業コード
+   * @return 企業情報取得レスポンス
    */
   @GetMapping("/{companyCode}")
   public CompanyFindResponce findByCompanyCode(
@@ -74,8 +75,8 @@ public class CompanyController {
    */
   @PutMapping
   public void update(@Validated @RequestBody CompanyUpdateRequest request) {
-    final var data = mapper.map(request, CompanyData.class);
-    companyService.update(data);
+    final var companyData = mapper.map(request, CompanyData.class);
+    companyService.update(companyData);
   }
 
   /**

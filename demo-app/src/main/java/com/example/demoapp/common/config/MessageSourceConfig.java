@@ -1,4 +1,4 @@
-package com.example.demoapp.common.comfig;
+package com.example.demoapp.common.config;
 
 import java.nio.charset.StandardCharsets;
 import org.springframework.context.MessageSource;

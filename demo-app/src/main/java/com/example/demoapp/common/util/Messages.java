@@ -15,6 +15,9 @@ public class Messages {
     Messages.messageSourceAccessor = messageSourceAccessor;
   }
 
+  /**
+   * メッセージキーに基づいてメッセージを取得するためのヘルパークラス
+   */
   @RequiredArgsConstructor
   public static class Message {
 
@@ -48,7 +51,7 @@ public class Messages {
       new Message("demoapp.isNotExist");
 
   /**
-   * メッセージ引数クラス
+   * メッセージ引数に使用する項目名を定義するクラス
    */
   public static class Items {
     /** 企業コード */

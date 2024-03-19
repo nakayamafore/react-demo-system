@@ -1,4 +1,4 @@
-package com.example.demoapp.common.exception;
+package com.example.demoapp.common.util;
 
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Value;

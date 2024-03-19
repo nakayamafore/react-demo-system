@@ -4,6 +4,10 @@ spring:
     username: demoadmin
     password: "#Bagabondo13"
     driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    baseline-version: 0
+    enabled: true
+    baseline-on-migrate: true
   mvc:
     problemdetails:
       enabled: true

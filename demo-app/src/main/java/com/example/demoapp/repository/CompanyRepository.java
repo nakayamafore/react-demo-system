@@ -79,13 +79,16 @@ public class CompanyRepository {
    * 指定の企業コードが存在するか確認する
    * 
    * @param companyCode 企業コード
-   * @return 存在件数
+   * @return true: 存在する, false: 存在しない
    */
-  public int count(String companyCode) {
+  public boolean exists(String companyCode) {
     return dslContext
-        .selectCount()
-        .from(COMPANY)
-        .where(COMPANY.COMPANY_CODE.eq(companyCode))
-        .fetchOne(0, int.class);
+        .selectOne()
+        .whereExists(
+            dslContext
+                .selectFrom(COMPANY)
+                .where(COMPANY.COMPANY_CODE.eq(companyCode)))
+        .fetchOptional()
+        .isPresent();
   }
 }

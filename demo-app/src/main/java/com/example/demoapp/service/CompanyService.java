@@ -3,10 +3,10 @@ package com.example.demoapp.service;
 import static com.example.demoapp.common.util.Messages.Items.COMPANY_CODE;
 import java.util.List;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.example.demoapp.common.exception.DemoError;
+import com.example.demoapp.common.exception.ConflictException;
+import com.example.demoapp.common.exception.NotFoundException;
 import com.example.demoapp.common.util.Messages;
 import com.example.demoapp.model.CompanyData;
 import com.example.demoapp.repository.CompanyRepository;
@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 public class CompanyService {
 
   private final CompanyRepository companyRepository;
-  private final DemoError demoError;
   private final ModelMapper mapper;
 
   /**
@@ -31,9 +30,9 @@ public class CompanyService {
    * @param companyData 企業情報
    */
   public void register(CompanyData companyData) {
-    final int count = companyRepository.count(companyData.getCompanyCode());
-    if (count >= 1) {
-      throw demoError.of(HttpStatus.CONFLICT, Messages.IS_CONFLICT.message(COMPANY_CODE));
+    final boolean companyExists = companyRepository.exists(companyData.getCompanyCode());
+    if (companyExists) {
+      throw new ConflictException(Messages.IS_CONFLICT.message(COMPANY_CODE));
     }
     companyRepository.save(mapper.map(companyData, CompanyEntity.class));
   }
@@ -59,8 +58,7 @@ public class CompanyService {
     final List<CompanyEntity> companyEntitys = companyRepository
         .findByCompanyCode(companyCode);
     if (companyEntitys.isEmpty()) {
-      throw demoError
-          .of(HttpStatus.NOT_FOUND, Messages.IS_NOT_EXIST.message(COMPANY_CODE));
+      throw new NotFoundException(Messages.IS_NOT_EXIST.message(COMPANY_CODE));
     }
     return companyEntitys.get(0);
   }
@@ -74,8 +72,7 @@ public class CompanyService {
     final List<CompanyEntity> companyEntitys = companyRepository
         .findByCompanyCode(companyData.getCompanyCode());
     if (companyEntitys.isEmpty()) {
-      throw demoError
-          .of(HttpStatus.NOT_FOUND, Messages.IS_NOT_EXIST.message(COMPANY_CODE));
+      throw new NotFoundException(Messages.IS_NOT_EXIST.message(COMPANY_CODE));
     }
     companyRepository.save(mapper.map(companyData, CompanyEntity.class));
   }
